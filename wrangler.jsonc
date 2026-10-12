@@ -1,0 +1,32 @@
+{
+  "name": "pr-review-agent",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-10-01",
+  "env": {
+    "dev": {
+      "d1_databases": [
+        { "binding": "DB", "database_name": "pr-review-agent-dev", "database_id": "760488f5-3841-48c5-adbb-3c09be47f1ad" }
+      ],
+      "queues": {
+        "producers": [{ "binding": "PLAN_QUEUE", "queue": "pr-review-dev" }],
+        "consumers": [
+          { "queue": "pr-review-dev", "max_batch_size": 10, "max_retries": 3, "dead_letter_queue": "pr-review-dev-dlq" },
+          { "queue": "pr-review-dev-dlq", "max_batch_size": 10 }
+        ]
+      },
+      "kv_namespaces": [
+        { "binding": "CONFIG_CACHE", "id": "40051e2d25174379a9bf9c3e8ce90fcb" }
+      ],
+      "durable_objects": {
+        "bindings": [
+          { "name": "QUOTA_LEDGER", "class_name": "QuotaLedger" },
+          { "name": "REVIEW_RUN", "class_name": "ReviewRun" }
+        ]
+      },
+      "migrations": [
+        { "tag": "v1", "new_sqlite_classes": ["QuotaLedger", "ReviewRun"] }
+      ],
+      "triggers": { "crons": [] }
+    }
+  }
+}

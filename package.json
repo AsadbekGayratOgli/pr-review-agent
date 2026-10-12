@@ -1,0 +1,22 @@
+{
+  "name": "pr-review-agent",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev --env dev",
+    "deploy": "wrangler deploy --env dev",
+    "deploy:dry": "wrangler deploy --env dev --dry-run",
+    "typecheck": "tsc --noEmit",
+    "cf-typegen": "wrangler types"
+  },
+  "dependencies": {
+    "hono": "^4.13.13",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20261012.1",
+    "typescript": "^7.0.2",
+    "wrangler": "^4.149.0"
+  }
+}
