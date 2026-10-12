@@ -223,4 +223,15 @@ __marimo__/
 .kilo/
 
 # Cursor
-.cursor/           
+.cursor/
+
+# Node
+node_modules/
+
+# Cloudflare Wrangler
+.wrangler/
+.dev.vars
+worker-configuration.d.ts
+
+# GitHub App private keys
+*.pem           
