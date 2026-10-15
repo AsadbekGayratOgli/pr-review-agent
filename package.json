@@ -8,6 +8,7 @@
     "deploy": "wrangler deploy --env dev",
     "deploy:dry": "wrangler deploy --env dev --dry-run",
     "typecheck": "tsc --noEmit",
+    "test": "vitest run",
     "cf-typegen": "wrangler types"
   },
   "dependencies": {
@@ -15,8 +16,10 @@
     "zod": "^4.6.7"
   },
   "devDependencies": {
+    "@cloudflare/vitest-pool-workers": "^0.8.71",
     "@cloudflare/workers-types": "^5.20261012.1",
     "typescript": "^7.0.2",
+    "vitest": "^3.2.7",
     "wrangler": "^4.149.0"
   }
 }
