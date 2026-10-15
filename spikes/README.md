@@ -3,6 +3,31 @@
 Throwaway verification code. Not shipped with the Worker: these scripts run under
 plain Node (Node >= 22.6 with type stripping), not in the Workers runtime.
 
+## worker-bench.ts — CPU benchmarks
+
+One route per step, so each request invocation isolates a step's CPU cost. Steps:
+`hmac`, `jwt`, `parse`, `hunk`, `chunk` (each with `?size=small|medium|large`),
+`queue`, `d1`, `do`, `zod`.
+
+To measure (bench code is intentionally NOT wired into `src/index.ts`):
+
+```bash
+# 1. temporarily mount it
+#    in src/index.ts:  import benchApp from '../spikes/worker-bench';
+#                      app.route('/bench', benchApp);
+# 2. deploy and capture CPU per invocation from tail
+npx wrangler deploy --env dev
+npx wrangler tail --env dev --format json > C:/Temp/kilo/tail.jsonl   # keep running
+for i in $(seq 30); do curl -s -o /dev/null https://pr-review-agent-dev.<subdomain>.workers.dev/bench/hunk?size=medium; done
+# 3. remove the mount from src/index.ts and redeploy
+```
+
+Each tail event's `cpuTime` field (ms) is that invocation's CPU. Results are
+recorded in `docs/spike-results.md`.
+
+Note: `wrangler tail` redirected via PowerShell `>` is UTF-16; decode before
+parsing (the run used a UTF-16 → UTF-8 conversion step).
+
 ## auth-smoke.ts
 
 Proves the GitHub App auth chain end to end: PKCS#8 key → RS256 JWT → installation
