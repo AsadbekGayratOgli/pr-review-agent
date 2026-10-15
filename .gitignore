@@ -230,8 +230,10 @@ node_modules/
 
 # Cloudflare Wrangler
 .wrangler/
-.dev.vars
 worker-configuration.d.ts
 
 # GitHub App private keys
-*.pem           
+*.pem
+
+# Dev resources
+.dev.*

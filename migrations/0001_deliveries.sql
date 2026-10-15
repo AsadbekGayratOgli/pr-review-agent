@@ -1,0 +1,4 @@
+CREATE TABLE IF NOT EXISTS deliveries (
+  id TEXT PRIMARY KEY,
+  received_at INTEGER NOT NULL
+);
